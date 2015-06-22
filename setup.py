@@ -1,61 +1,54 @@
-# -*- coding: utf-8 -*-
-#!/usr/bin/env python
+import re
+from os import path
+from setuptools import setup
 
-import os
-import sys
 
-import municipios
+# read() and find_version() taken from jezdez's python apps, ex:
+# https://github.com/jezdez/django_compressor/blob/develop/setup.py
 
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+def read(*parts):
+    return open(path.join(path.dirname(__file__), *parts)).read()
 
-version = municipios.__version__
 
-if sys.argv[-1] == 'publish':
-    os.system('python setup.py sdist upload')
-    print("You probably want to also tag the version now:")
-    print("  git tag -a %s -m 'version %s'" % (version, version))
-    print("  git push --tags")
-    sys.exit()
+def find_version(*file_paths):
+    version_file = read(*file_paths)
+    version_match = re.search(
+        r"^__version__ = ['\"]([^'\"]*)['\"]", version_file, re.M,
+    )
+    if version_match:
+        return version_match.group(1)
+    raise RuntimeError("Unable to find version string.")
 
-readme = open('README.rst').read()
-history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
     name='django-municipios',
-    version=version,
-    description="""Aplicação plugável Django com modelos e widgets para os Municípios Brasileiros""",
-    long_description=readme + '\n\n' + history,
+    version=municipios.__version__,
     author='ZNC Sistemas',
     author_email='contato@znc.com.br',
+    description="""Aplicação plugável Django com modelos e widgets para os Municípios Brasileiros""",
+    long_description=read('README.rst'),
     url='https://github.com/znc-sistemas/django-municipios',
+    license='MIT',
     packages=[
         'municipios',
-        'municipios.migrations'
+        'municipios.migrations',
     ],
-    include_package_data=True,
-    install_requires=[
-    ],
-    license="MIT",
-    zip_safe=False,
-    keywords='django-municipios',
+    install_requires=['django>=1.5.0'],
     classifiers=[
-        'Framework :: Django',
-        'Development Status :: 5 - Production/Stable',
-        'Environment :: Web Environment',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Programming Language :: JavaScript',
+        "Development Status :: 3 - Alpha",
+        "Environment :: Web Environment",
+        "Intended Audience :: Developers",
+        'License :: OSI Approved :: BSD License',
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.6",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.2",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
         'Topic :: Utilities',
-        'Natural Language :: Portuguese (Brazilian)'
-#        'Programming Language :: Python :: 2',
-#        'Programming Language :: Python :: 2.6',
-#        'Programming Language :: Python :: 2.7',
-#        'Programming Language :: Python :: 3',
-#        'Programming Language :: Python :: 3.3',
-    ],
+        "Framework :: Django",
+    ]
 )
