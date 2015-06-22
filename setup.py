@@ -22,7 +22,7 @@ def find_version(*file_paths):
 
 setup(
     name='django-municipios',
-    version=municipios.__version__,
+    version=find_version('municipios', '__init__.py'),
     author='ZNC Sistemas',
     author_email='contato@znc.com.br',
     description="""Aplicação plugável Django com modelos e widgets para os Municípios Brasileiros""",
