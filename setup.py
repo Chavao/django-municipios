@@ -33,6 +33,7 @@ setup(
     url='https://github.com/znc-sistemas/django-municipios',
     packages=[
         'municipios',
+        'municipios.migrations'
     ],
     include_package_data=True,
     install_requires=[
