@@ -33,7 +33,6 @@ setup(
         'municipios',
         'municipios.migrations',
     ],
-    install_requires=['django>=1.5.0'],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Web Environment",
